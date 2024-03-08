@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/* 이미지를 반응형으로 만들어주는 스타일 */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+  /* 상품 정보 섹션을 위한 스타일 */
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  /* 버튼들을 나란히 배열하기 위한 스타일 */
+  .product-actions {
+    display: flex;
+    justify-content: flex-start;
+  }
+  /* 버튼 사이의 간격을 주기 위한 스타일 */
+  .btn {
+    margin-right: 10px; /* 버튼 사이 간격 */
+  }

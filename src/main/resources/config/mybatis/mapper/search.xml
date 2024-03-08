@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="s">
+	<select id="search_p_name" resultType="product"
+		parameterType="java.util.Map">
+		SELECT * FROM product WHERE p_name BETWEEN #{one} AND #{two}
+	</select>
+	<select id="search_p_namet" resultType="String"
+		parameterType="String">
+		SELECT p_name
+		FROM (
+		SELECT p_name, p_sold, p_idx,
+		CASE
+		WHEN p_name LIKE #{keyword} || '%' THEN 0
+		ELSE 1
+		END AS order_criteria
+		FROM product
+		WHERE p_name LIKE '%' || #{keyword} || '%'
+		ORDER BY order_criteria, p_sold DESC, p_idx
+		)
+		WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
+
+	<select id="search_result" resultType="String">
+		select p_name from product
+	</select>
+
+	<select id="select_search_list" resultType="product"
+		parameterType="java.util.Map">
+		SELECT * FROM (
+		SELECT
+		RANK() OVER (ORDER BY p.p_idx DESC) AS no,
+		p.*,
+		COALESCE(pc.avg_star, 0) AS avg_star,
+		COALESCE(pc.total_comments, 0) AS total_comments
+		FROM
+		product p
+		LEFT JOIN (
+		SELECT
+		p_idx,
+		AVG(pc_star) AS avg_star,
+		COUNT(*) AS total_comments
+		FROM
+		product_comment
+		GROUP BY
+		p_idx
+		) pc ON p.p_idx = pc.p_idx
+		WHERE
+		p.p_name LIKE '%' || #{keyword} || '%'
+		)
+		WHERE
+		no BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="search_count" resultType="int"
+		parameterType="String">
+		select count(*) from product where p_name like '%' ||
+		#{keyword} || '%'
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

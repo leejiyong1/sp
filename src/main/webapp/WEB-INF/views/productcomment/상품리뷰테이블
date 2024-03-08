@@ -1,0 +1,35 @@
+create table product_comment(
+pc_idx number(10) primary key, -- 리뷰번호
+pc_content clob,-- 리뷰내용
+pc_image varchar(50),--상품사진
+pc_good number(10),--좋아요갯수
+p_idx number(10),-- 상품번호
+u_idx number(10),-- 유저번호
+pc_star number(5),--별점
+pc_regidate date
+);
+create sequence pc_seq_idx;
+
+create table pcgood(
+pcg_idx number(10) primary key,--좋아요번호
+pc_idx number(10),--상품리뷰번호
+u_idx number(10)--좋아요누른 회원번호
+);
+
+create sequence pcg_seq_idx;
+drop table pcgood;
+drop sequence pcg_seq_idx;
+update product_comment set pc_good = 0;
+
+create table buy_product(
+bp_idx number(10) primary key, 
+p_idx number(10),--상품번호
+u_idx number(10),--유저번호
+p_count number(10),--유저가 산 상품수량
+totalprice number(20),--총 가격
+bp_regidate date-- 산날짜
+);
+create sequence bp_seq_idx;
+insert into buy_product values(bp_seq_idx.nextval,1,1,3,90000,sysdate);
+
+

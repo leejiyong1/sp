@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="l">
+	<select id="check_like" resultType="likes" parameterType="likes">
+		SELECT * FROM likes
+		WHERE b_idx = #{b_idx} AND u_email = #{u_email}
+	</select>
+	
+	<select id="count_like" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM likes
+		WHERE b_idx = #{b_idx}
+	</select>
+	
+	<insert id="insert" parameterType="likes">
+		INSERT INTO likes VALUES(
+			#{b_idx},
+			1,
+			sysdate,
+			#{u_email}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="likes">
+		DELETE FROM likes
+		WHERE b_idx = #{b_idx} AND u_email = #{u_email}
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

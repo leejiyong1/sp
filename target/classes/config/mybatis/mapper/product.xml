@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p">
+	<select id="select_category" resultType="product"
+		parameterType="java.util.Map">
+		select * from (select rank() over(order by p_idx desc)
+		no,
+		p.* from product p where p.p_category_b = #{p_category_b}) where no
+		between #{start} and #{end}
+	</select>
+
+	<select id="select_category_count" resultType="int"
+		parameterType="String">
+		select count(*) from product where p_category_b =
+		#{p_category_b}
+	</select>
+	<select id="select_product_view" resultType="product"
+		parameterType="int">
+		select * from product where p_idx = #{p_idx}
+	</select>
+
+
+	<update id="buy_product" parameterType="java.util.Map">
+		update product set p_sold
+		= p_sold + #{quantity} where p_idx = #{p_idx}
+	</update>
+
+	<select id="buy_product_view" resultType="product"
+		parameterType="int">
+		select * from product where p_idx = #{p_idx}
+	</select>
+
+	<select id="select_category_s" resultType="product"
+		parameterType="java.util.Map">
+		select * from (select rank() over(order by p_idx desc)
+		no,
+		p.* from product p where p.p_category_s = #{p_category_s}) where no
+		between #{start} and #{end}
+	</select>
+
+	<select id="select_category_s_count" resultType="int"
+		parameterType="String">
+		select count(*) from product where p_category_s =
+		#{p_category_s}
+	</select>
+
+	<select id="select_best" resultType="product">
+		SELECT p.*,
+		pc.avg_star,
+		pc.total_comments,
+		p.rank AS no
+		FROM (
+		SELECT p_idx,
+		p_name,
+		p_content,
+		p_regidate,
+		p_category_b,
+		p_category_s,
+		p_image,
+		p_color,
+		p_price,
+		p_hit,
+		p_sold,
+		ROW_NUMBER() OVER
+		(ORDER BY p_sold DESC) AS rank
+		FROM product
+		) p
+		LEFT JOIN (
+		SELECT p_idx,
+		AVG(pc_star) AS avg_star,
+		COUNT(pc_idx) AS
+		total_comments
+		FROM
+		product_comment
+		GROUP BY p_idx
+		) pc ON p.p_idx =
+		pc.p_idx
+		WHERE p.rank
+		BETWEEN 1 AND 20
+	</select>
+
+	<select id="select_best_main" resultType="product">
+		SELECT p.*,
+		pc.avg_star,
+		pc.total_comments
+		FROM (
+		SELECT p_idx,
+		p_name,
+		p_content,
+		p_regidate,
+		p_category_b,
+		p_category_s,
+		p_image,
+		p_color,
+		p_price,
+		p_hit,
+		p_sold,
+		ROW_NUMBER() OVER (ORDER BY p_sold DESC) AS rank
+		FROM product
+		) p
+		LEFT JOIN (
+		SELECT p_idx,
+		AVG(pc_star) AS avg_star,
+		COUNT(pc_idx) AS
+		total_comments
+		FROM product_comment
+		GROUP BY p_idx
+		) pc ON p.p_idx =
+		pc.p_idx
+		WHERE p.rank BETWEEN 1 AND 6
+	</select>
+
+	<select id="select_discount" resultType="product">
+		SELECT * FROM (
+		SELECT
+		bp.p_idx,
+		p.p_name,
+		p.p_price,
+		p.discountprice,
+		p.p_image,
+		SUM(bp.p_count)
+		AS total_sold,
+		NVL(pc.avg_star, 0) AS avg_star,
+		NVL(pc.total_comments,
+		0) AS total_comments
+		FROM
+		buy_product bp
+		JOIN
+		product p ON bp.p_idx =
+		p.p_idx
+		LEFT JOIN (
+		SELECT
+		p_idx,
+		AVG(pc_star) AS avg_star,
+		COUNT(pc_idx)
+		AS total_comments
+		FROM
+		product_comment
+		GROUP BY
+		p_idx
+		) pc ON bp.p_idx =
+		pc.p_idx
+		WHERE
+		bp.bp_regidate >= TRUNC(SYSDATE - 1)
+		AND bp.bp_regidate
+		&lt;
+		TRUNC(SYSDATE)
+		GROUP BY
+		bp.p_idx, p.p_name, p.p_price,
+		p.discountprice, p.p_image, pc.avg_star,
+		pc.total_comments
+		ORDER BY
+		total_sold ASC
+		) WHERE ROWNUM BETWEEN 1 AND 6
+	</select>
+
+	<select id="select_discount2" resultType="product">
+		SELECT * FROM (
+		SELECT
+		bp.p_idx,
+		p.p_name,
+		p.p_price,
+		p.discountprice,
+		p.p_image,
+		SUM(bp.p_count)
+		AS total_sold,
+		NVL(pc.avg_star, 0) AS avg_star,
+		NVL(pc.total_comments,
+		0) AS total_comments
+		FROM
+		buy_product bp
+		JOIN
+		product p ON bp.p_idx =
+		p.p_idx
+		LEFT JOIN (
+		SELECT
+		p_idx,
+		AVG(pc_star) AS avg_star,
+		COUNT(pc_idx)
+		AS total_comments
+		FROM
+		product_comment
+		GROUP BY
+		p_idx
+		) pc ON bp.p_idx =
+		pc.p_idx
+		WHERE
+		bp.bp_regidate >= TRUNC(SYSDATE - 1)
+		AND bp.bp_regidate
+		&lt;
+		TRUNC(SYSDATE)
+		GROUP BY
+		bp.p_idx, p.p_name, p.p_price,
+		p.discountprice, p.p_image, pc.avg_star,
+		pc.total_comments
+		ORDER BY
+		total_sold ASC
+		) WHERE ROWNUM BETWEEN 1 AND 20
+	</select>
+
+	<select id="select_commend_main" resultType="product">
+		SELECT * FROM (
+		SELECT p.*, pc.avg_star, pc.total_comments
+		FROM product p
+		LEFT JOIN (
+		SELECT p_idx,
+		AVG(pc_star) AS avg_star,
+		COUNT(pc_idx) AS total_comments
+		FROM product_comment
+		GROUP BY p_idx
+		) pc ON p.p_idx = pc.p_idx
+		ORDER BY pc.total_comments DESC, pc.avg_star DESC
+		)
+		WHERE ROWNUM BETWEEN 1 AND 6
+	</select>
+	<select id="select_commend_page" resultType="product">
+		SELECT * FROM (
+		SELECT p.*, pc.avg_star, pc.total_comments
+		FROM product p
+		LEFT JOIN (
+		SELECT p_idx,
+		AVG(pc_star) AS avg_star,
+		COUNT(pc_idx) AS total_comments
+		FROM product_comment
+		GROUP BY p_idx
+		) pc ON p.p_idx = pc.p_idx
+		ORDER BY pc.total_comments DESC, pc.avg_star DESC
+		)
+		WHERE ROWNUM BETWEEN 1 AND 20
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

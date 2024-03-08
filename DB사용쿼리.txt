@@ -1,0 +1,370 @@
+//DB에서 쿼리를 사용하였을때 모두를 위해서 해당 쿼리를 무조건 이 텍스트 안에 적어주시길 바랍니다.
+//
+// 
+-----------------시퀀스 생성-----------------
+--멤버
+CREATE SEQUENCE seq_member_idx 
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 999999999999
+NOCYCLE
+NOORDER;
+--유저
+CREATE SEQUENCE seq_user1_idx
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 999999999999
+NOCYCLE
+NOORDER;
+--게시판
+CREATE SEQUENCE seq_board_idx
+INCREMENT BY 1
+START WITH
+1
+MINVALUE 1
+MAXVALUE 999999999999
+NOCYCLE
+NOORDER;
+
+--게시판 댓글
+CREATE SEQUENCE seq_comment_idx
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 999999999999
+NOCYCLE
+NOORDER;
+
+--게시판 톤
+CREATE SEQUENCE seq_tone_idx
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 999999999999
+NOCYCLE
+NOORDER;
+
+--상품 댓글
+create sequence pc_seq_idx
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 999999999999
+NOCYCLE
+NOORDER;
+ 
+--상품 리뷰
+create sequence pcg_seq_idx
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 999999999999
+NOCYCLE
+NOORDER;
+
+
+-----------------테이블 생성-----------------
+--유저
+CREATE TABLE USER1(
+	u_idx NUMBER(10) NOT NULL PRIMARY KEY,
+	u_email varchar(20) NOT NULL,
+	u_name varchar(10) NOT NULL,
+	u_pwd varchar(100) NOT NULL,
+	u_regidate varchar(50) NOT NULL,
+	u_regiip varchar(20) NOT NULL
+);
+-- 유저 정보(아직 미사용)
+CREATE TABLE USERINFO(
+	u_idx NUMBER(10) NOT NULL PRIMARY KEY,
+	u_gender varchar(10),
+	u_id varchar(10),
+	u_pnum varchar(20),
+	u_birth varchar(10),
+	u_addr varchar(100)
+);
+--게시판
+CREATE TABLE board (
+	b_idx NUMBER(10) primary key,
+	m_idx NUMBER(5), --작성자 일련번호 (foreign key)
+	subject VARCHAR2(100) NOT NULL, --제목
+	content CLOB NOT NULL, --내용
+	ip VARCHAR2(20),
+	regdate DATE, --작성일
+	likes_count NUMBER(5), --추천수 (따봉수)
+	readhit NUMBER(10), --조회수
+	t_idx NUMBER(5),
+	p_idx NUMBER(5),
+	t_name VARCHAR2(50),
+	p_name VARCHAR2(50),
+	comment_count NUMBER(10), --댓글수
+	u_email VARCHAR2(500),
+	u_name VARCHAR2(300)
+);
+--게시판 댓글
+CREATE TABLE comment_table (
+	c_idx NUMBER(10) primary key,
+	b_idx NUMBER(10),
+	m_idx NUMBER(5),
+	content CLOB,
+	ip VARCHAR2(20),
+	regdate DATE,
+	ref NUMBER(10),
+	step NUMBER(5),
+	depth NUMBER(3),
+	reply_count NUMBER(10),
+	u_email VARCHAR2(500),
+	u_name VARCHAR2(300)
+);
+
+--게시판 좋아요
+CREATE TABLE likes (
+	b_idx NUMBER(10),
+	m_idx NUMBER(10),
+	like_date DATE,
+	u_email VARCHAR2(500)
+);
+--톤
+CREATE TABLE tone (
+	t_idx NUMBER(5),
+	t_name VARCHAR2(50)
+);
+
+--게시판 상품
+CREATE TABLE board_product(
+	p_idx NUMBER(3),
+	p_name VARCHAR2(300)
+);
+
+--상품 댓글
+create table product_comment(
+pc_idx number(10) primary key, -- 리뷰번호
+pc_content clob,-- 리뷰내용
+pc_image varchar(50),--상품사진
+pc_good number(10),--좋아요갯수
+p_idx number(10),-- 상품번호
+u_idx number(10),-- 유저번호
+pc_star number(5),
+pc_regidate date
+);
+
+--상품 리뷰
+create table pcgood(
+pcg_idx number(10) primary key,--좋아요번호
+pc_idx number(10),--상품리뷰번호
+u_idx number(10)--좋아요누른 회원번호
+);
+
+
+COMMIT;
+-----------------키 지정-----------------
+ALTER TABLE MEMBER ADD CONSTRAINT m_pk PRIMARY KEY (m_id);
+ALTER TABLE tone ADD CONSTRAINT tone_pk PRIMARY KEY (t_idx);
+
+-----------------외래키 지정-----------------
+
+ALTER TABLE board
+ADD CONSTRAINT fk_board_user FOREIGN KEY (m_idx)
+REFERENCES USER1(u_idx);
+
+ALTER TABLE COMMENT_TABLE
+ADD CONSTRAINT fk_comment_user FOREIGN KEY (m_idx)
+REFERENCES USER1(u_idx);
+
+ALTER TABLE likes
+ADD CONSTRAINT fk_likes_user FOREIGN KEY (m_idx)
+REFERENCES USER1(u_idx);
+
+ALTER TABLE PRODUCT_COMMENT
+ADD CONSTRAINT fk_pc_user FOREIGN KEY (u_idx)
+REFERENCES USER1(u_idx);
+
+ALTER TABLE PCGOOD
+ADD CONSTRAINT fk_pcg_user FOREIGN KEY (u_idx)
+REFERENCES USER1(u_idx);
+
+/*에러
+ALTER TABLE BOARD
+ADD CONSTRAINT fk_board_tone FOREIGN KEY (T_IDX)
+REFERENCES TONE(T_IDX);
+
+ALTER TABLE PRODUCT_COMMENT
+ADD CONSTRAINT fk_pc_pcg FOREIGN KEY (pc_idx)
+REFERENCES PCGOOD(pc_idx);
+
+*/
+-----------------데이터-----------------
+
+--톤
+INSERT INTO tone VALUES(
+	seq_tone_idx.nextVal,
+	'봄 웜'
+);
+
+INSERT INTO tone VALUES(
+	seq_tone_idx.nextVal,
+	'여름 쿨'
+);
+
+INSERT INTO tone VALUES(
+	seq_tone_idx.nextVal,
+	'가을 웜'
+);
+
+INSERT INTO tone VALUES(
+	seq_tone_idx.nextVal,
+	'겨울 쿨'
+);
+--유저 더미
+INSERT INTO USER1 (u_idx, u_id, u_name, u_pwd, u_pnum, u_email, u_gender, u_regidate, u_regiip, u_addr, u_birth)
+SELECT
+    seq_user1_idx.nextval,
+    'user' || level,
+    'User' || level,
+    'password' || level,
+    '010-1234-567' || level,
+    'user' || level || '@example.com',
+    CASE WHEN mod(level, 2) = 0 THEN 'Male' ELSE 'Female' END,
+    to_char(sysdate, 'YYYY-MM-DD'),
+    '192.168.0.' || level,
+    'Address' || level,
+    '1990-01-0' || level
+FROM dual
+CONNECT BY level <= 9;
+
+--게시판 더미
+INSERT INTO board (b_idx, m_idx, subject, content, ip, regdate, likes_count, readhit, t_idx, p_idx, t_name, p_name, comment_count)
+VALUES (seq_board_idx.nextval, 1, '제목1', '내용1', '192.168.0.1', SYSDATE, 10, 100, 1, 1, '카테고리1', '작성자1', 5);
+
+INSERT INTO board (b_idx, m_idx, subject, content, ip, regdate, likes_count, readhit, t_idx, p_idx, t_name, p_name, comment_count)
+VALUES (seq_board_idx.nextval, 2, '제목2', '내용2', '192.168.0.2', SYSDATE, 8, 80, 2, 1, '카테고리2', '작성자2', 3);
+
+INSERT INTO board (b_idx, m_idx, subject, content, ip, regdate, likes_count, readhit, t_idx, p_idx, t_name, p_name, comment_count)
+VALUES (seq_board_idx.nextval, 3, '제목3', '내용3', '192.168.0.3', SYSDATE, 12, 120, 3, 2, '카테고리3', '작성자3', 7);
+
+INSERT INTO board (b_idx, m_idx, subject, content, ip, regdate, likes_count, readhit, t_idx, p_idx, t_name, p_name, comment_count)
+VALUES (seq_board_idx.nextval, 3, '제목4', '내용4', '192.168.0.3', SYSDATE, 12, 120, 4, 2, '카테고리3', '작성자3', 7);
+
+--상품 더미
+INSERT INTO product_comment (pc_idx, pc_content, pc_image, pc_good, p_idx, u_idx, pc_star, pc_regidate) 
+VALUES (1001, '이 상품 정말 좋네요!', 'product1.jpg', 10, 1, 2001, 5, TO_DATE('2024-02-27', 'YYYY-MM-DD'));
+
+INSERT INTO product_comment (pc_idx, pc_content, pc_image, pc_good, p_idx, u_idx, pc_star, pc_regidate) 
+VALUES (1002, '디자인이 예쁘고 가격도 저렴합니다.', 'product2.jpg', 15, 2, 2002, 4, TO_DATE('2024-02-27', 'YYYY-MM-DD'));
+
+INSERT INTO product_comment (pc_idx, pc_content, pc_image, pc_good, p_idx, u_idx, pc_star, pc_regidate) 
+VALUES (1003, '사용해보니 성능이 괜찮네요.', 'product3.jpg', 20, 3, 2003, 4, TO_DATE('2024-02-26', 'YYYY-MM-DD'));
+
+INSERT INTO product_comment (pc_idx, pc_content, pc_image, pc_good, p_idx, u_idx, pc_star, pc_regidate) 
+VALUES (1004, '배송도 빠르고 상품도 만족스럽습니다.', 'product4.jpg', 12, 4, 2004, 5, TO_DATE('2024-02-26', 'YYYY-MM-DD'));
+
+INSERT INTO product_comment (pc_idx, pc_content, pc_image, pc_good, p_idx, u_idx, pc_star, pc_regidate) 
+VALUES (1005, '제품 품질이 아주 좋아요!', 'product5.jpg', 18, 5, 2005, 5, TO_DATE('2024-02-25', 'YYYY-MM-DD'));
+--상품 댓글 더미
+INSERT INTO pcgood (pcg_idx, pc_idx, u_idx) VALUES (1, 1001, 2001);
+INSERT INTO pcgood (pcg_idx, pc_idx, u_idx) VALUES (2, 1002, 2002);
+INSERT INTO pcgood (pcg_idx, pc_idx, u_idx) VALUES (3, 1003, 2003);
+INSERT INTO pcgood (pcg_idx, pc_idx, u_idx) VALUES (4, 1004, 2004);
+INSERT INTO pcgood (pcg_idx, pc_idx, u_idx) VALUES (5, 1005, 2005);
+
+
+
+Mysql=============================================================================================================
+--유저테이블
+
+CREATE TABLE `user1` (
+	`u_idx` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`u_id` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_name` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_pwd` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_email` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_gender` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_regidate` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_regiip` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_addr` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`u_birth` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`u_idx`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+--Board Table
+CREATE TABLE `board` (
+	`b_idx` INT(10) NOT NULL AUTO_INCREMENT,
+	`m_idx` INT(10) NOT NULL,
+	`subject` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`content` LONGTEXT NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`ip` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`regdate` DATE NOT NULL,
+	`likes_count` INT(10) NULL DEFAULT NULL,
+	`readhit` INT(10) NULL DEFAULT NULL,
+	`t_idx` INT(10) NULL DEFAULT NULL,
+	`p_idx` INT(10) NULL DEFAULT NULL,
+	`t_name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`p_name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`comment_count` INT(10) NULL DEFAULT NULL,
+	PRIMARY KEY (`b_idx`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+--Tone Table
+CREATE TABLE `tone` (
+	`t_idx` INT(10) NULL DEFAULT NULL,
+	`t_name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci'
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+--Like Table
+CREATE TABLE `like` (
+	`b_idx` INT(10) NOT NULL,
+	`m_idx` INT(10) NOT NULL,
+	`like_date` DATE NOT NULL
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+--Comment Table
+CREATE TABLE `comment_table` (
+	`c_idx` INT(10) NOT NULL AUTO_INCREMENT,
+	`b_idx` INT(10) NOT NULL,
+	`m_idx` INT(10) NOT NULL,
+	`content` LONGTEXT NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`ip` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`regdate` DATE NOT NULL,
+	`ref` INT(10) NOT NULL,
+	`step` INT(10) NOT NULL,
+	`depth` INT(10) NOT NULL,
+	`reply_count` INT(10) NULL DEFAULT NULL,
+	PRIMARY KEY (`c_idx`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

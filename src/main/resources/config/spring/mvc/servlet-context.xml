@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+	<!-- Enables the Spring MVC @Controller programming model -->
+
+	<!-- @controller 어노테이션을 사용하기위한 설정 -->
+	<annotation-driven />
+
+	<!-- @Autowired를 사용한 클래스가 있다면 반드시 servlet-context.xml에 추가되어야 할 코드 -->
+	<context:annotation-config />
+
+	<!-- 컴포넌트 스캔을 사용하기위한 설정 -->
+	<!-- <context:component-scan base-package="com.shop.beauty" /> -->
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<!-- resources 파일 접근 권한 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- 파일이름에 .jsp로 자동 매핑하기위한 prefix 설정 -->
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<!-- <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<beans:property name="prefix" value="/WEB-INF/views/" /> <beans:property 
+		name="suffix" value=".jsp" /> </beans:bean> -->
+
+	<!-- 생성자 주입 -->
+	<!-- DeptController <- dept_daoBean 예시 -->
+	<!-- <beans:bean class="com.mega.db.DeptController"> <beans:constructor-arg 
+		ref="dept_daoBean"/> </beans:bean> -->
+
+	<!-- Setter 주입 -->
+	<!-- <beans:bean class="com.mega.db.SawonController"> <beans:property name="sawonDao" 
+		ref="sawon_daoBean"/> </beans:bean> -->
+
+
+	<beans:bean class="controller.AdminController">
+	</beans:bean>
+	<beans:bean class="controller.Admin1Controller">
+		<beans:constructor-arg ref="admin_servicBean" />
+	</beans:bean>
+	<beans:bean class="controller.MyInfoController">
+		<beans:constructor-arg ref="user_userBean" />
+		<beans:constructor-arg
+			ref="userBoard_userBoardBean" />
+	</beans:bean>
+	<beans:bean class="controller.TempController">
+	</beans:bean>
+	<beans:bean class="controller.LoginController">
+	</beans:bean>
+	<beans:bean class="controller.MainController">
+	</beans:bean>
+	<beans:bean class="controller.RegistController">
+		<beans:constructor-arg ref="user_userBean" />
+	</beans:bean>
+	<beans:bean class="controller.ProductController">
+		<beans:constructor-arg ref="product_serviceBean" />
+	</beans:bean>
+	<beans:bean class="controller.BoardController">
+		<beans:constructor-arg ref="board_serviceBean" />
+		<beans:constructor-arg ref="tone_serviceBean" />
+		<beans:constructor-arg ref="comment_serviceBean" />
+		<beans:constructor-arg ref="likes_serviceBean" />
+		<beans:constructor-arg ref="board_productserviceBean" />
+		<beans:constructor-arg ref="user_serviceBean" />
+	</beans:bean>
+	<beans:bean class="controller.SearchController">
+		<beans:constructor-arg ref="search_serviceBean" />
+	</beans:bean>
+	<beans:bean class="controller.ColorController">
+	</beans:bean>
+	
+	<beans:bean class="controller.ProductCommentController">
+		<beans:constructor-arg ref="productcomment_serviceBean"/>
+		<beans:constructor-arg ref="pcgood_serviceBean"/>
+	</beans:bean>
+	<beans:bean class="controller.CartController">
+		<beans:constructor-arg ref="cart_serviceBean"/>
+	</beans:bean>
+</beans:beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

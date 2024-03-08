@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- dao에 sqlSesson 집어넣는곳 -->
+
+	<!-- 생성자 주입 방식 -->
+	<!-- <bean id="user_daoBean" class="dao.UserDAO"> <constructor-arg name="sqlSession" 
+		ref="sqlSessionBean"/> </bean> -->
+
+	<!-- Setter 주입 방식 -->
+	<!-- <bean id = "sawon_daoBean" class= "dao.SawonDAO"> <property name= "sqlSession" 
+		ref="sqlSessionBean"/> </bean> -->
+
+	<!-- 생성자 주입 권장 https://mangkyu.tistory.com/125 -->
+
+
+	<bean id="user_userBean" class="dao.UserDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+	<bean id="userBoard_userBoardBean" class="dao.UserBoardDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+	
+	<bean id="user_serviceBean" class="service.UserService">
+		<constructor-arg ref="user_userBean" />
+	</bean>
+
+	<bean id="product_daoBean" class="dao.ProductDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="product_serviceBean" class="service.ProductService">
+		<constructor-arg ref="product_daoBean" />
+	</bean>
+
+	<bean id="board_daoBean" class="dao.BoardDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="board_serviceBean" class="service.BoardService">
+		<constructor-arg ref="board_daoBean" />
+	</bean>
+	
+	<bean id="board_product_daoBean" class="dao.Board_ProductDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="board_productserviceBean" class="service.Board_ProductService">
+		<constructor-arg ref="board_product_daoBean" /> 
+	</bean>
+
+	<bean id="tone_daoBean" class="dao.ToneDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="tone_serviceBean" class="service.ToneService">
+		<constructor-arg ref="tone_daoBean" />
+	</bean>
+
+	<bean id="comment_daoBean" class="dao.CommentDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="comment_serviceBean" class="service.CommentService">
+		<constructor-arg ref="comment_daoBean" />
+	</bean>
+
+	<bean id="likes_daoBean" class="dao.LikesDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="likes_serviceBean" class="service.LikesService">
+		<constructor-arg ref="likes_daoBean" />
+	</bean>
+
+	<bean id="search_daoBean" class="dao.SearchDAO">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="search_serviceBean" class="service.SearchService">
+		<constructor-arg ref="search_daoBean" />
+	</bean>
+
+	<bean id="admin_adminBean" class="dao.AdminDAOImpl">
+		<constructor-arg ref="sqlSessionBean" />
+	</bean>
+
+	<bean id="admin_servicBean" class="service.AdminServiceImpl">
+		<constructor-arg ref="admin_adminBean" />
+	</bean>
+	
+	<bean id="productcomment_daoBean" class="dao.ProductCommentDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="productcomment_serviceBean" class="service.ProductCommentService">
+		<constructor-arg ref="productcomment_daoBean"/>
+	</bean>
+	
+	<bean id="pcgood_daoBean" class="dao.PcGoodDAO">
+		<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	<bean id="pcgood_serviceBean" class="service.PcGoodService">
+		<constructor-arg ref="pcgood_daoBean"/>
+	</bean>
+	
+	<bean id="cart_daoBean" class="dao.CartDAO">
+	 	<constructor-arg ref="sqlSessionBean"/>
+	</bean>
+	
+	<bean id="cart_serviceBean" class="service.CartService">
+		<constructor-arg ref="cart_daoBean"/>
+	</bean>
+</beans>

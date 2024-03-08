@@ -1,0 +1,40 @@
+create sequence seq_product_idx;
+create table product(
+	p_idx number(10) primary key,--상품 번호
+	p_name varchar2(50),--상품이름
+	p_content clob,--상품설명
+	p_regidate date,--상품등록날짜
+	p_category_b varchar2(50),--큰분류상품카테고리
+	p_category_s varchar2(50),--작은분류상품카테고리
+	p_image varchar2(100), -- 상품사진
+	p_color varchar2(100), --상품색
+	p_price number(10), --상품가격
+	p_hit number(10), --상품조회수
+	p_sold number(10) -- 판매된 상품갯수
+);
+
+insert into product values(seq_product_idx.nextval,'립스틱','입술에바름',sysdate,'woman','Lips','test_file.jpg','red',30000,0,0);
+insert into product values(seq_product_idx.nextval,'마스카라','눈',sysdate,'woman','eye','nofile','black',25000,0,2);
+insert into product values(seq_product_idx.nextval,'립밤','입술에바름',sysdate,'woman','Lips','test_file.jpg','red',30000,0,0);
+insert into product values(seq_product_idx.nextval,'로션','얼굴',sysdate,'gender','face','no_file','white',30000,0,0);
+insert into product values(seq_product_idx.nextval,'스킨','얼굴',sysdate,'gender','face','no_file','white',30000,0,0);
+insert into product values(seq_product_idx.nextval,'에센스','얼굴',sysdate,'gender','face','no_file','white',30000,0,0);
+insert into product values(seq_product_idx.nextval,'스킨푸드','얼굴',sysdate,'gender','face','no_file','white',30000,0,0);
+
+update product set p_sold = p_sold +1;
+ALTER TABLE product ADD (discountprice NUMBER(10));
+UPDATE product
+SET discountprice = p_price * 0.7;
+
+
+
+
+
+
+
+
+
+
+
+
+

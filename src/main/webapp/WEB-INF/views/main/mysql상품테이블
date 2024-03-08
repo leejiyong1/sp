@@ -1,0 +1,42 @@
+CREATE TABLE `product` (
+	`p_idx` INT(10) NOT NULL AUTO_INCREMENT,
+	`p_name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`p_content` VARCHAR(1000) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`p_regidate` DATE NULL DEFAULT NULL,
+	`p_category_b` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`p_category_s` VARCHAR(50) NULL DEFAULT NULL,
+	`p_image` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`p_color` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`p_price` INT(10) NULL DEFAULT NULL,
+	`p_hit` INT(10) NULL DEFAULT NULL,
+	`p_sold` INT(10) NULL DEFAULT NULL,
+	PRIMARY KEY (`p_idx`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `product_comment` (
+	`pc_idx` INT(10) NOT NULL AUTO_INCREMENT,
+	`pc_content` VARCHAR(500) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`pc_image` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`pc_good` INT(10) NULL DEFAULT NULL,
+	`p_idx` INT(10) NULL DEFAULT NULL,
+	`u_idx` INT(10) NULL DEFAULT NULL,
+	`pc_star` INT(10) NULL DEFAULT NULL,
+	`pc_regidate` DATE NULL DEFAULT NULL,
+	PRIMARY KEY (`pc_idx`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `pcgood` (
+	`pcg_idx` INT(10) NOT NULL AUTO_INCREMENT,
+	`pc_idx` INT(10) NOT NULL,
+	`u_idx` INT(10) NOT NULL,
+	PRIMARY KEY (`pcg_idx`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pcg">
+	
+	<insert id="pc_good" parameterType="pcgood">
+		insert into pcgood values(pcg_seq_idx.nextval,#{pc_idx},#{u_idx})
+	</insert>
+	
+	<select id="pc_u_id" resultType="int" parameterType="String">
+		select u_idx from user1 where u_email = #{u_email}
+	</select>
+	<!-- <select id="pc_u_id_check" resultType="int" parameterType="String">
+		select pcg.u_idx from pcgood pcg join user1 u on pcg.u_idx = u.u_idx where u.u_id = #{u_id}
+	</select> -->
+	
+	<select id="pc_u_id_check" resultType="pcgood" parameterType="java.util.Map">
+		select * from pcgood where pc_idx = #{pc_idx} and u_idx = #{u_idx}
+	</select>
+	
+	<delete id="pcg_delete" parameterType="java.util.Map">
+		delete from pcgood where pc_idx = #{pc_idx} and u_idx = #{u_idx}
+	</delete>
+	
+	<select id="pcg_list" resultType="pcgood" parameterType="int">
+		select * from pcgood where u_idx = #{u_idx}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ub">
+
+	<select id="viewMyPosts" parameterType="String"
+		resultType="board">
+		SELECT b.b_idx,
+		b.subject, b.content, b.readhit,
+		b.regdate,
+		u.u_name AS userName
+		FROM board b
+		JOIN
+		user1 u ON b.m_idx =
+		u.u_idx
+		WHERE
+		u.u_email = #{u_email}
+	</select>
+	<select id="viewMyComments" parameterType="String"
+		resultType="board">
+		select * from
+		comment_table
+		where u_email= #{u_email}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+

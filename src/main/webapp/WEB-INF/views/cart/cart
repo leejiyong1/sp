@@ -1,0 +1,8 @@
+create sequence cart_seq_idx;
+create table cart(
+cart_idx number(10) primary key,
+p_idx number(10),
+u_idx number(10),
+quantity number(10),
+totalprice number(10)
+);

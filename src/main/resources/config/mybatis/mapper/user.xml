@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="u">
+	<!-- create -->
+	<insert id="join" parameterType="user">
+		INSERT INTO USER1
+		VALUES(
+		seq_user1_idx.nextval,
+		#{u_email},
+		#{u_name},
+		#{u_pwd},
+		#{u_regidate},
+		#{u_regiip}
+		)
+	</insert>
+	<!-- read -->
+	<!-- read user all -->
+	<select id="select_list" resultType="user">
+		SELECT * FROM USER1
+	</select>
+	
+	<!-- select idx -->
+	<select id="select_idx" resultType="int" parameterType="String">
+		SELECT u_idx FROM USER1 
+		WHERE u_email = #{u_email}
+	</select>
+	
+	<!-- select name -->
+	<select id="select_name" resultType="String" parameterType="String">
+		SELECT u_name FROM USER1 
+		WHERE u_email = #{u_email}
+	</select>
+	
+	<!-- read user one -->
+	<select id="login" parameterType="String" resultType="user">
+		SELECT *
+		FROM USER1
+		WHERE u_email = #{u_email}
+	</select>
+	<!-- update -->
+	<select id="CheckMyAccountBeforeChangeMyPwd"
+		parameterType="String" resultType="java.lang.Integer">
+		SELECT u_pwd FROM USER1 WHERE
+		u_email = #{u_email}
+	</select>
+	<!-- update pwd -->
+	<update id="changeMyPwd" parameterType="user">
+		UPDATE USER1 SET u_pwd =
+		#{u_pwd} WHERE u_email = #{u_email}
+	</update>
+	<!-- delete -->
+	<delete id="deleteAccount" parameterType="String">
+		delete
+		FROM USER1
+		WHERE
+		u_email = #{u_email}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
