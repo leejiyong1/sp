@@ -117,6 +117,17 @@ public class ProductController {
 		return VIEW_PATH+"user_detail.jsp";
 	}
 	
+	@RequestMapping(value = "buyproduct_success.do",method = RequestMethod.GET)
+	public String buy_product_success(String u_email,BuyProductVO bp_vo,String imp_uid) {
+		String email = (String) session.getAttribute("email");
+		if(email == null) {
+			return "redirect:main.do";
+		}
+		int u_idx = p_service.user_idx(u_email);
+		bp_vo.setU_idx(u_idx);
+		return null;
+	}
+	
 	
 	
 	

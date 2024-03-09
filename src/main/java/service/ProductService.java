@@ -97,5 +97,10 @@ public class ProductService {
 		List<BuyProductVO> list = p_dao.user_detail(u_idx);
 		return list;
 	}
+	
+	public int user_idx(String u_email) {
+		int u_idx = p_dao.user_idx(u_email);
+		return u_idx;
+	}
 
 }

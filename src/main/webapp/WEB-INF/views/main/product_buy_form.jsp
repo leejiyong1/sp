@@ -40,7 +40,8 @@
 				//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
 				
 				if(rsp.success){
-					location.href="/result?imp_uid=" + rsp.imp_uid;
+					location.href="/buyproduct_success.do?imp_uid=" + rsp.imp_uid +"&u_email"+${sessionScope.email}+
+							"&p_idx="+${p_vo.p_idx}+"&p_count="+${p_vo.quantity }+"p_total_price="+${p_vo.p_totalprice };
 				}
 			});
 		}
