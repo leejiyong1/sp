@@ -251,8 +251,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select u_idx from user1 where u_email = #{u_email}
 	</select>
 	
-	<insert id="buy_product" parameterType="bp">
-		insert into buy_product values (bp_seq_idx.nextval,#{p_idx},#{u_idx},#{p_count},#{p_totalprice},sysdate,0)
+	<insert id="buy_product_insert" parameterType="bp">
+		insert into buy_product values (bp_seq_idx.nextval,#{p_idx},#{u_idx},#{p_count},#{totalprice},sysdate,0)
 	</insert>
 </mapper>
 

@@ -117,16 +117,29 @@ public class ProductController {
 		return VIEW_PATH+"user_detail.jsp";
 	}
 	
-	@RequestMapping(value = "buyproduct_success.do",method = RequestMethod.GET)
-	public String buy_product_success(String u_email,BuyProductVO bp_vo,String imp_uid) {
+	@RequestMapping(value = "buyproduct_success.do",method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String buy_product_success(String imp_uid,String u_email,int p_idx,int p_count,int p_total_price) {
 		String email = (String) session.getAttribute("email");
 		if(email == null) {
 			return "redirect:main.do";
 		}
 		int u_idx = p_service.user_idx(u_email);
+		BuyProductVO bp_vo = new BuyProductVO();
+		bp_vo.setP_count(p_count);
+		bp_vo.setP_idx(p_idx);
+		bp_vo.setTotalprice(p_total_price);
 		bp_vo.setU_idx(u_idx);
-		return null;
+		int res = p_service.buy_product(bp_vo);
+		if(res >0) {
+			return "yes";
+		}else {
+			return "no";
+		}
+		//return VIEW_PATH+"buyproduct_success.jsp";
 	}
+	
+	
 	
 	
 	

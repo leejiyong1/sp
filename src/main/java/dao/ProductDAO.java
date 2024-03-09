@@ -80,5 +80,10 @@ public class ProductDAO {
 	public int user_idx(String u_email) {
 		return sqlSession.selectOne("p.user_idx", u_email);
 	}
+	
+	public int buy_product(BuyProductVO bp_vo) {
+		int res = sqlSession.insert("p.buy_product_insert", bp_vo);
+		return res;
+	}
 
 }

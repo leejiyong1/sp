@@ -102,5 +102,10 @@ public class ProductService {
 		int u_idx = p_dao.user_idx(u_email);
 		return u_idx;
 	}
+	
+	public int buy_product(BuyProductVO bp_vo) {
+		int res = p_dao.buy_product(bp_vo);
+		return res;
+	}
 
 }
