@@ -211,7 +211,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM product_comment
 		GROUP BY p_idx
 		) pc ON p.p_idx = pc.p_idx
-		ORDER BY pc.total_comments DESC, pc.avg_star DESC
+		ORDER BY
+		pc.total_comments DESC, pc.avg_star DESC
 		)
 		WHERE ROWNUM BETWEEN 1 AND 6
 	</select>
@@ -226,10 +227,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM product_comment
 		GROUP BY p_idx
 		) pc ON p.p_idx = pc.p_idx
-		ORDER BY pc.total_comments DESC, pc.avg_star DESC
+		ORDER BY
+		pc.total_comments DESC, pc.avg_star DESC
 		)
 		WHERE ROWNUM BETWEEN 1 AND 20
 	</select>
+
+	<select id="select_user_product" resultType="bp"
+		parameterType="int">
+		SELECT bp.bp_regidate,
+		p.p_name,
+		bp.p_count,
+		bp.totalprice,
+		p.p_image,
+		p.p_price
+		FROM buy_product bp
+		JOIN product p ON bp.p_idx = p.p_idx
+		WHERE bp.u_idx = #{u_idx}
+		ORDER BY bp.bp_regidate DESC
+	</select>
+	
+	<select id="user_idx" resultType="int" parameterType="String">
+		select u_idx from user1 where u_email = #{u_email}
+	</select>
+	
+	
 </mapper>
 
 

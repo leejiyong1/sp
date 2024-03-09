@@ -7,6 +7,7 @@ import java.util.Map;
 import dao.ProductDAO;
 import util.Common;
 import util.ProductPaging;
+import vo.BuyProductVO;
 import vo.ProductVO;
 
 public class ProductService {
@@ -88,6 +89,12 @@ public class ProductService {
 	
 	public List<ProductVO> p_discount_page(){
 		List<ProductVO> list = p_dao.p_discount2();
+		return list;
+	}
+	
+	public List<BuyProductVO> user_detail(String u_email){
+		int u_idx = p_dao.user_idx(u_email);
+		List<BuyProductVO> list = p_dao.user_detail(u_idx);
 		return list;
 	}
 

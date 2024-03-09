@@ -18,6 +18,7 @@
 		<typeAlias type="vo.ProductCommentVO" alias="productcomment"/>
 		<typeAlias type="vo.PcGoodVO" alias="pcgood"/>
 		<typeAlias type="vo.CartVO" alias="cart"/>
+		<typeAlias type="vo.BuyProductVO" alias="bp"/>
 	</typeAliases>
 
 	<mappers>

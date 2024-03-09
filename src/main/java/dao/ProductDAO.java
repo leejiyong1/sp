@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.BuyProductVO;
 import vo.ProductVO;
 
 public class ProductDAO {
@@ -70,6 +71,14 @@ public class ProductDAO {
 	public List<ProductVO> p_discount2(){
 		List<ProductVO> list = sqlSession.selectList("p.select_discount2");
 		return list;
+	}
+	
+	public List<BuyProductVO> user_detail(int u_idx){
+		List<BuyProductVO> list = sqlSession.selectList("p.select_user_product",u_idx);
+		return list;
+	}
+	public int user_idx(String u_email) {
+		return sqlSession.selectOne("p.user_idx", u_email);
 	}
 
 }

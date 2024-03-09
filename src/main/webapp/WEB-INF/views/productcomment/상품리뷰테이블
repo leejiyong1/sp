@@ -27,9 +27,12 @@ p_idx number(10),--상품번호
 u_idx number(10),--유저번호
 p_count number(10),--유저가 산 상품수량
 totalprice number(20),--총 가격
-bp_regidate date-- 산날짜
+bp_regidate date,-- 산날짜
+pc_check -- 리뷰를 여부체크
 );
 create sequence bp_seq_idx;
-insert into buy_product values(bp_seq_idx.nextval,1,1,3,90000,sysdate);
+insert into buy_product values(bp_seq_idx.nextval,1,2,3,90000,sysdate,0);
+alter table buy_product add (pc_check number(3));
+update buy_product set pc_check=0;
 
 
