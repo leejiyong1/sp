@@ -147,7 +147,7 @@
 	              <div class="row gx-0 gy-2 w-100 flex-between-center">
 	                <div class="col-auto"><a class="text-decoration-none" href="resources/index.html">
 	                    <div class="d-flex align-items-center"><img src="resources/assets/img/icons/logo.png" alt="phoenix" width="27" />
-	                      <p class="logo-text ms-2">phoenix</p>
+	                      <p class="logo-text ms-2">Revuse</p>
 	                    </div>
 	                  </a></div>
 
