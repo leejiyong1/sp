@@ -26,6 +26,34 @@ ALTER TABLE product ADD (discountprice NUMBER(10));
 UPDATE product
 SET discountprice = p_price * 0.7;
 
+매트립스틱:test01;
+에스쁘아 립스틱:test02
+바닐라코 글로우 베일 립스틱:test03
+웨이크메이크 벨벳 블러팅 매트 스틱:test04
+입큰 플러피 립스틱:test05
+페리페라 하트잼 글로우 립스틱:test 06
+정샘물 뉴클래식 매트 립스틱:test 07
+락드 키스 24아워 립스틱:test08
+페리페라 잉크무드 매트립스틱:test09
+롬앤 립스틱:test10
+삐아 레디 투 웨어 워터 립스틱:test11
+아원 글래스 언락드 새틴 크림 립스틱:test12
+파우더 키스 벨벳 블러 슬림 스틱 립스틱:test13
+
+insert into product values(seq_product_idx.nextval,'매트립스틱','입술에바름',sysdate,'woman','Lips','test01.jpg','red',25000,0,0,0);
+insert into product values(seq_product_idx.nextval,'에스쁘아 립스틱','입술에바름',sysdate,'woman','Lips','test02.jpg','red',22000,0,0,0);
+insert into product values(seq_product_idx.nextval,'바닐라코 글로우 베일 립스틱','입술에바름',sysdate,'woman','Lips','test03.jpg','red',35000,0,0,0);
+insert into product values(seq_product_idx.nextval,'웨이크메이크 벨벳 블러팅 매트 스틱','입술에바름',sysdate,'woman','Lips','test04.jpg','red',44000,0,0,0);
+insert into product values(seq_product_idx.nextval,'입큰 플러피 립스틱','입술에바름',sysdate,'woman','Lips','test05.jpg','red',18000,0,0,0);
+insert into product values(seq_product_idx.nextval,'페리페라 하트잼 글로우 립스틱','입술에바름',sysdate,'woman','Lips','test06.jpg','red',55000,0,0,0);
+insert into product values(seq_product_idx.nextval,'정샘물 뉴클래식 매트 립스틱','입술에바름',sysdate,'woman','Lips','test07.jpg','red',27000,0,0,0);
+insert into product values(seq_product_idx.nextval,'락드 키스 24아워 립스틱','입술에바름',sysdate,'woman','Lips','test08.jpg','red',19000,0,0,0);
+insert into product values(seq_product_idx.nextval,'페리페라 잉크무드 매트립스틱','입술에바름',sysdate,'woman','Lips','test09.jpg','red',32000,0,0,0);
+insert into product values(seq_product_idx.nextval,'롬앤 립스틱','입술에바름',sysdate,'woman','Lips','test10.jpg','red',14000,0,0,0);
+insert into product values(seq_product_idx.nextval,'삐아 레디 투 웨어 워터 립스틱','입술에바름',sysdate,'woman','Lips','test11.jpg','red',28000,0,0,0);
+insert into product values(seq_product_idx.nextval,'아원 글래스 언락드 새틴 크림 립스틱','입술에바름',sysdate,'woman','Lips','test12.jpg','red',33000,0,0,0);
+insert into product values(seq_product_idx.nextval,'파우더 키스 벨벳 블러 립스틱','입술에바름',sysdate,'woman','Lips','test13.jpg','red',43000,0,0,0);
+
 
 
 

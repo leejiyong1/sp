@@ -41,10 +41,9 @@
 					<div class="col-sm-4 mb-3">
 						<div class="thumbnail">
 							<img src="resources/productimages/${product.p_image }"
-								 class="img-fluid" alt="Responsive image" alt="상품 이미지">
+								 class="img-fluid" alt="Responsive image" alt="상품 이미지" style="max-width: 60%; height: auto;">
 							<div class="caption">
 								<h3>${product.p_name }</h3>
-								<p>${product.p_content }</p>
 								<div>
 									<c:forEach begin="1" end="${product.avg_star}" var="i">
 										<span class="fas fa-star text-warning"></span>

@@ -8,8 +8,8 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-	
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">	
+
 <style>
 .star-rating {
 	line-height: 32px;
@@ -42,6 +42,7 @@
 </script>
 </head>
 <body>
+
 	<div class="container mt-5">
 		<h2>상품 리뷰 작성하기</h2>
 		<form action="product_comment_write.do" method="post" enctype="multipart/form-data">

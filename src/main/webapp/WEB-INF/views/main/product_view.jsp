@@ -115,12 +115,12 @@
   <div class="row align-items-center">
     <!-- 상품 이미지 영역 -->
     <div class="col-md-6 product-info">
-      <img src="resources/productimages/${p_vo.p_image }" alt="상품 이미지" class="img-responsive center-block" style="max-width: 100%; height: auto;">
+      <img src="resources/product_main_image/Amuse_tint.jpg" alt="상품 이미지" class="img-responsive center-block" style="max-width: 80%; height: auto;">
     </div>
     <!-- 상품 정보 영역 -->
     <div class="col-md-6">
-      <h2>${p_vo.p_name }</h2>
-      <p>${p_vo.p_content }</p>
+      <h2>NEW 어뮤즈 베베 틴트 기획/단품</h2>
+     <%--  <p>${p_vo.p_content }</p> --%>
       <div class="form-group">
         <label for="quantity">수량:</label>
         <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" style="width: auto;" onchange="updateprice()">
@@ -130,7 +130,6 @@
       <div class="product-actions">
         <button type="button" class="btn btn-primary" onclick="cart(${p_vo.p_idx},${p_vo.p_price })">장바구니에 담기</button>
         <button type="button" class="btn btn-success" onclick="buyproduct()">구매하기</button>
-        <button type="button" class="btn btn-warning">찜하기</button>
       </div>
     </div>
   </div>
