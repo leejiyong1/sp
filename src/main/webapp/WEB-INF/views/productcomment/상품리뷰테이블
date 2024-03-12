@@ -46,4 +46,8 @@ insert into buy_product values(bp_seq_idx.nextval,1,2,3,90000,sysdate,0);
 alter table buy_product add (pc_check number(3));
 update buy_product set pc_check=0;
 
+insert into buy_product values(bp_seq_idx.nextval,55,2,2,86000,sysdate,0);
+insert into buy_product values(bp_seq_idx.nextval,52,2,3,99000,sysdate,0);
+
+
 

@@ -38,6 +38,7 @@
                         <th class="sort align-middle text-end ps-4" scope="col" data-sort="price" style="width:150px;">가격</th>
                         <th class="sort align-middle text-end ps-4" scope="col" data-sort="quantity" style="width:200px;">수량</th>
                         <th class="sort align-middle text-end ps-4" scope="col" data-sort="total" style="width:250px;">총합계</th>
+                        <th class="sort align-middle text-end ps-4" scope="col" data-sort="product_comment" style="width:250px;">리뷰</th>
                       </tr>
                     </thead>
                     <tbody class="list" id="order-table-body">
@@ -48,6 +49,12 @@
                         <td class="price align-middle text-body fw-semibold text-end py-0 ps-4">${bp.p_price }</td>
                         <td class="quantity align-middle text-end py-0 ps-4 text-body-tertiary">${bp.p_count }</td>
                         <td class="total align-middle fw-bold text-body-highlight text-end py-0 ps-4">${bp.totalprice }</td>
+                        <c:if test="${bp.pc_check eq 1}">
+                        <td class="total align-middle fw-bold text-body-highlight text-end py-0 ps-4"><a href="product_view.do?p_idx=${bp.p_idx }">리뷰완료</a></td>
+                        </c:if>
+                        <c:if test="${bp.pc_check eq 0}">
+                        <td class="total align-middle fw-bold text-body-highlight text-end py-0 ps-4"><a href="product_comment_write_form.do">리뷰달기</a></td>
+                        </c:if>
                       </tr>
                       </c:forEach>
                     </tbody>

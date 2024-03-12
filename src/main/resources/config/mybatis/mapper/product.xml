@@ -240,7 +240,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		bp.p_count,
 		bp.totalprice,
 		p.p_image,
-		p.p_price
+		p.p_price,
+		bp.pc_check,
+		p.p_idx
 		FROM buy_product bp
 		JOIN product p ON bp.p_idx = p.p_idx
 		WHERE bp.u_idx = #{u_idx}
