@@ -62,5 +62,11 @@ public class ProductCommentDAO {
 		int count = sqlSession.selectOne("pc.product_buy_check",map);
 		return count;
 	}
+	
+	public List<ProductCommentVO> productComment_myList(int u_idx){
+		List<ProductCommentVO> list = sqlSession.selectList("pc.user_productComment",u_idx);
+		return list;
+	}
+	
 
 }

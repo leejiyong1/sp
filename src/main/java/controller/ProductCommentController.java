@@ -165,12 +165,29 @@ public class ProductCommentController {
 	}
 	
 	@RequestMapping(value = "product_comment_delete.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@ResponseBody
 	public String productComment_delete(int pc_idx) {
 		String email = (String) session.getAttribute("email");
+		int res = 0;
 		if(email != null) {
-			pc_Service.productComment_delete(email, pc_idx);
+			res = pc_Service.productComment_delete(email, pc_idx);
 		}
-		return null;
+		if(res == 1) {
+			return "yes";
+		}else {
+			return "no";
+		}
+	}
+	
+	@RequestMapping(value = "my_product_comment.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	public String MyproductComment_list(Model model) {
+		String email = (String) session.getAttribute("email");
+		List<ProductCommentVO> list =  pc_Service.user_productComment(email);
+		if(email == null) {
+			return "redirect:main.do";
+		}
+		model.addAttribute("list",list);
+		return VIEW_PATH+"user_review.jsp";
 	}
 	
 }

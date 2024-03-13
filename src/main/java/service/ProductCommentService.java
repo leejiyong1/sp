@@ -64,5 +64,11 @@ public class ProductCommentService {
 		int count = pc_dao.productbuy_check(map);
 		return count;
 	}
+	
+	public List<ProductCommentVO> user_productComment(String email){
+		int u_idx = pc_dao.user_select(email);
+		List<ProductCommentVO> list = pc_dao.productComment_myList(u_idx);
+		return list;
+	}
 
 }

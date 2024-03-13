@@ -3,58 +3,76 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pc">
-	<!-- <select id="product_comment" resultType="productcomment"
-		parameterType="int">
-		SELECT pc.pc_content, pc.pc_image,u.u_id,pc_star,pc_regidate,pc_good,pc.pc_idx
+	<!-- <select id="product_comment" resultType="productcomment" parameterType="int"> 
+		SELECT pc.pc_content, pc.pc_image,u.u_id,pc_star,pc_regidate,pc_good,pc.pc_idx 
+		FROM product_comment pc JOIN user1 u ON pc.u_idx = u.u_idx WHERE pc.p_idx 
+		= #{p_idx} </select> -->
+
+	<select id="product_comment" resultType="productcomment"
+		parameterType="java.util.Map">
+		SELECT * FROM (
+		SELECT RANK() OVER (ORDER BY pc.pc_idx DESC) AS rnk,
+		pc.pc_content,
+		pc.pc_image,
+		u.u_email,
+		pc.pc_star,
+		pc.pc_regidate,
+		pc.pc_good,
+		pc.pc_idx
 		FROM product_comment pc
 		JOIN user1 u ON pc.u_idx = u.u_idx
 		WHERE pc.p_idx = #{p_idx}
-	</select> -->
-	
-	<select id="product_comment" resultType="productcomment" parameterType="java.util.Map">
-	SELECT * FROM (
-	SELECT RANK() OVER (ORDER BY pc.pc_idx DESC) AS rnk,
-	pc.pc_content,
-	pc.pc_image,
-	u.u_email,
-	pc.pc_star,
-	pc.pc_regidate,
-	pc.pc_good,
-	pc.pc_idx
-	FROM product_comment pc
-	JOIN user1 u ON pc.u_idx = u.u_idx
-	WHERE pc.p_idx = #{p_idx}
-	) subquery
-	WHERE rnk BETWEEN #{start} AND #{end}
+		) subquery
+		WHERE rnk BETWEEN #{start} AND #{end}
 	</select>
-	<select id="select_pc_count" resultType="int" parameterType="int">
-		select count(*) from product_comment where p_idx=#{p_idx}
+	<select id="select_pc_count" resultType="int"
+		parameterType="int">
+		select count(*) from product_comment where
+		p_idx=#{p_idx}
 	</select>
-	<insert id="product_comment_write" parameterType="productcomment">
-		INSERT INTO product_comment VALUES(pc_seq_idx.nextval,#{pc_content},#{pc_image},0,1,#{u_idx},#{pc_star},sysdate)
+	<insert id="product_comment_write"
+		parameterType="productcomment">
+		INSERT INTO product_comment
+		VALUES(pc_seq_idx.nextval,#{pc_content},#{pc_image},0,1,#{u_idx},#{pc_star},sysdate)
 	</insert>
-	
+
 	<select id="user_select" resultType="int" parameterType="String">
-		select u_idx from user1 where u_email = #{u_email}
+		select
+		u_idx from user1 where u_email = #{u_email}
 	</select>
-	
+
 	<update id="pc_good_count" parameterType="int">
-		update product_comment set pc_good = pc_good+1 where pc_idx = #{pc_idx}
+		update product_comment
+		set pc_good = pc_good+1 where pc_idx = #{pc_idx}
 	</update>
-	
+
 	<update id="pc_good_count_minus" parameterType="int">
-		update product_comment set pc_good = pc_good-1 where pc_idx = #{pc_idx}
+		update
+		product_comment set pc_good = pc_good-1 where pc_idx = #{pc_idx}
 	</update>
-	<select id="product_good_user" resultType="productcomment" parameterType="int">
-	SELECT pc.* FROM product_comment pc JOIN pcgood pcg ON pc.pc_idx = pcg.pc_idx WHERE pcg.u_idx = #{u_idx}
+	<select id="product_good_user" resultType="productcomment"
+		parameterType="int">
+		SELECT pc.* FROM product_comment pc JOIN pcgood pcg ON pc.pc_idx =
+		pcg.pc_idx WHERE pcg.u_idx = #{u_idx}
 	</select>
-	
-	<delete id="delete_product_comment" parameterType="java.util.Map">
-		delete from product_comment where u_idx=#{u_idx} and pc_idx=#{pc_idx}
+
+	<delete id="delete_product_comment"
+		parameterType="java.util.Map">
+		delete from product_comment where u_idx=#{u_idx} and
+		pc_idx=#{pc_idx}
 	</delete>
-	
-	<select id="product_buy_check" resultType="int" parameterType="java.util.Map">
-		SELECT COUNT(*) FROM buy_product WHERE p_idx = #{p_idx} AND u_idx = #{u_idx};
+
+	<select id="product_buy_check" resultType="int"
+		parameterType="java.util.Map">
+		SELECT COUNT(*) FROM buy_product WHERE p_idx = #{p_idx}
+		AND u_idx = #{u_idx};
+	</select>
+
+	<select id="user_productComment" resultType="productcomment"
+		parameterType="int">
+		SELECT pc.*, p.p_name
+		FROM product_comment pc
+		JOIN product p ON pc.p_idx = p.p_idx where pc.u_idx = #{u_idx}
 	</select>
 </mapper>
 
