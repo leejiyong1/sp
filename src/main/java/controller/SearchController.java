@@ -123,6 +123,7 @@ public class SearchController {
 	@ResponseBody
 	public String search_record_del(HttpServletRequest request, HttpServletResponse response) {
 		s_service.deleteSearch(request,response);
+		
 		 return "su";
 	}
 	
