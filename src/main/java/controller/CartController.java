@@ -41,6 +41,7 @@ public class CartController {
 		model.addAttribute("list", list);
 		model.addAttribute("total",total);
 		return VIEW_PATH + "cart_list.jsp";
+		
 	}
 	
 	@RequestMapping(value = "cart_insert.do",method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
